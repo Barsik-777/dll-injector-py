@@ -21,4 +21,4 @@ python injector_gui.py
 ```
 ---
 
-![Screenshot](Screenshot.png)
+![Screenshot](screenshot.png)
