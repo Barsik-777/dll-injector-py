@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>🧬 DLL Injector</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #121212;
+      color: #00ffcc;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+      font-size: 32px;
+      color: #00ffcc;
+    }
+
+    .container {
+      background-color: #1e1e1e;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px #00ffcc33;
+      width: 400px;
+    }
+
+    input[type="text"], input[type="number"], button {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+    }
+
+    input[type="text"], input[type="number"] {
+      background-color: #2a2a2a;
+      color: #00ffcc;
+    }
+
+    button {
+      background-color: #00ffcc;
+      color: #1e1e1e;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    button:hover {
+      background-color: #00ccaa;
+    }
+
+    #log {
+      margin-top: 20px;
+      background-color: #0f0f0f;
+      padding: 10px;
+      border-radius: 5px;
+      font-size: 14px;
+      height: 100px;
+      overflow-y: auto;
+      color: #cccccc;
+    }
+
+    .file-group {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .file-group input[type="text"] {
+      flex: 1;
+    }
+
+    .file-group button {
+      width: 100px;
+      padding: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>🧬 DLL Injector</h1>
+  <div class="container">
+    <input type="number" id="pidInput" placeholder="Enter process PID">
+
+    <div class="file-group">
+      <input type="text" id="dllPathInput" placeholder="Path to DLL">
+      <button id="browseBtn">📂 Browse</button>
+    </div>
+
+    <button onclick="inject()">🔫 Inject</button>
+    <div id="log">Log will appear here...</div>
+  </div>
+
+  <script>
+    document.getElementById('browseBtn').addEventListener('click', () => {
+      window.pywebview.api.path_dll().then(path => {
+        document.getElementById('dllPathInput').value = path;
+      });
+    });
+
+    function inject() {
+      const pid = parseInt(document.getElementById('pidInput').value);
+      const dllPath = document.getElementById('dllPathInput').value;
+      document.getElementById('log').innerText = `>> Attempting DLL injection into PID ${pid}...\n>> DLL: ${dllPath}`;
+
+      window.pywebview.api.inject_dll(pid, dllPath).then(response => {
+        document.getElementById('log').innerText = response;
+      });
+    }
+  </script>
+</body>
+</html>
