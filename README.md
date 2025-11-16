@@ -18,3 +18,7 @@ A minimalist GUI-based DLL injector built with Python and pywebview. Designed fo
 
 ```bash
 python injector_gui.py
+```
+---
+
+![Screenshot](Screenshot.png)
